@@ -9,6 +9,7 @@ namespace ViveTrack
     public class DeviceTracking : GH_Component
     {
         public VrTrackedDevice CurrenTrackedDevice;
+        public Plane XyPlane;
         /// <summary>
         /// Initializes a new instance of the DeviceTracking class.
         /// </summary>
@@ -18,6 +19,7 @@ namespace ViveTrack
               "ViveTrack", "ViveTrack")
         {
             CurrenTrackedDevice = new VrTrackedDevice();
+            
         }
 
         /// <summary>
@@ -37,6 +39,7 @@ namespace ViveTrack
             pManager.AddPlaneParameter("Plane", "Plane", "The tracking device plane representation",GH_ParamAccess.item);
             pManager.AddVectorParameter("Translation", "Translation", "3D vector", GH_ParamAccess.item);
             pManager.AddGenericParameter("Quaternion", "Quaternion", "", GH_ParamAccess.list);
+            pManager.AddGenericParameter("TransformationMatrix", "TransformationMatrix", "", GH_ParamAccess.item);
 
 
         }
@@ -51,11 +54,15 @@ namespace ViveTrack
             int index = -1;
             DA.GetData("Vive", ref temp);
             DA.GetData("Index", ref index);
-            if (index >= 0 && index < 16) CurrenTrackedDevice = temp.TrackedDevices.AllDevices[index];
+            if (index < 0 || index >= 16) return;
+            CurrenTrackedDevice = temp.TrackedDevices.AllDevices[index];
             CurrenTrackedDevice.ConvertPose();
-            DA.SetData("Translation", CurrenTrackedDevice.Translation);
-            DA.SetData("Quaternion", CurrenTrackedDevice.Quaternion);
-
+            XyPlane = Plane.WorldXY;
+            XyPlane.Transform(CurrenTrackedDevice.CorrectedMatrix4X4);
+            DA.SetData("Plane", XyPlane);
+            DA.SetData("Translation", CurrenTrackedDevice.CorrectedTranslation);
+            DA.SetData("Quaternion", CurrenTrackedDevice.CorrectedQuaternion);
+            DA.SetData("TransformationMatrix", CurrenTrackedDevice.CorrectedMatrix4X4);
         }
 
         /// <summary>

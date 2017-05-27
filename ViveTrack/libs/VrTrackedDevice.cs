@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Valve.VR;
 using Rhino.Geometry;
 using System.Numerics;
-using Quaternion = Rhino.Geometry.Quaternion;
+using Quaternion = System.Numerics.Quaternion;
 
 namespace ViveTrack
 {
@@ -20,9 +20,11 @@ namespace ViveTrack
         public string ModelNumber { get { return GetStringProperty(ETrackedDeviceProperty.Prop_ModelNumber_String); } }
         public string SerialNumber { get { return GetStringProperty(ETrackedDeviceProperty.Prop_SerialNumber_String); } }
         public HmdMatrix34_t Pose;
-        public Transform Matrix4x4;
+        public Transform CorrectedMatrix4X4;
         public Vector3d Translation;
         public Quaternion Quaternion;
+        public Vector3d CorrectedTranslation;
+        public Quaternion CorrectedQuaternion;
 
 
 
@@ -98,14 +100,54 @@ namespace ViveTrack
 
         public void ConvertPose()
         {
-            GetMatrix4x4FromPose();
             GetTranslationFromPose();
             GetQuaternionFromPose();
+            GetCorrectedTranslation();
+            GetCorrectedQuaternion();
+            GetCorrectedMatrix4X4();
         }
 
-        public void GetMatrix4x4FromPose()
+        public void GetCorrectedMatrix4X4()
         {
-           
+            Matrix4x4 translationMatrix = Matrix4x4.Transpose(Matrix4x4.CreateTranslation(new Vector3((float)CorrectedTranslation.X, (float)CorrectedTranslation.Y, (float)CorrectedTranslation.Z)));
+            Matrix4x4 rotationMatrix = Matrix4x4.CreateFromQuaternion(CorrectedQuaternion);
+            rotationMatrix = Matrix4x4.Transpose(rotationMatrix);
+            Matrix4x4 multiply = Matrix4x4.Multiply(translationMatrix,rotationMatrix);
+            CorrectedMatrix4X4 = ConvertFromSystemMatrixToRhinoMatrix(multiply);
+        }
+
+        public Transform ConvertFromSystemMatrixToRhinoMatrix(System.Numerics.Matrix4x4 m)
+        {
+            Transform t = new Transform
+            {
+                M00 = m.M11,
+                M01 = m.M12,
+                M02 = m.M13,
+                M03 = m.M14,
+                M10 = m.M21,
+                M11 = m.M22,
+                M12 = m.M23,
+                M13 = m.M24,
+                M20 = m.M31,
+                M21 = m.M32,
+                M22 = m.M33,
+                M23 = m.M34,
+                M30 = m.M41,
+                M31 = m.M42,
+                M32 = m.M43,
+                M33 = m.M44
+            };
+            return t;
+        }
+
+        public void GetCorrectedTranslation()
+        {
+            CorrectedTranslation = new Vector3d(Translation.X,-Translation.Z,Translation.Y);
+        }
+
+        public void GetCorrectedQuaternion()
+        {
+            CorrectedQuaternion = new Quaternion(Quaternion.X,-Quaternion.Z,Quaternion.Y,Quaternion.W);
         }
 
         public void GetTranslationFromPose()
@@ -122,7 +164,7 @@ namespace ViveTrack
             x = Math.Abs(x) * Math.Sign(Pose.m9 - Pose.m6);
             y = Math.Abs(y) * Math.Sign(Pose.m2 - Pose.m8);
             z = Math.Abs(z) * Math.Sign(Pose.m4 - Pose.m1);
-            this.Quaternion = new Rhino.Geometry.Quaternion(x,y,z,w);
+            this.Quaternion = new Quaternion((float)x,(float)y, (float)z, (float)w);
         }
 
         public override string ToString()

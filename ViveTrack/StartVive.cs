@@ -43,11 +43,19 @@ namespace ViveTrack
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            DA.SetData("MSG", Vive.TrackedDevices.Summary());
-            DA.SetDataList("Index", Vive.TrackedDevices.Indexes);
-            DA.SetData("Vive", Vive);
+            if (Vive.Success)
+            {
+                DA.SetData("MSG", Vive.TrackedDevices.Summary());
+                DA.SetDataList("Index", Vive.TrackedDevices.Indexes);
+                DA.SetData("Vive", Vive);
+                Vive.TrackedDevices.UpdatePoses();
+            }
+            else
+            {
+                var msg = "Vive is not running!! Detailed Reason:\n" + Vive.errorMsg + "\nCheck online the error code for more information.";
+                DA.SetData("MSG", msg);
+            }
 
-            Vive.TrackedDevices.UpdatePoses();
         }
 
         /// <summary>

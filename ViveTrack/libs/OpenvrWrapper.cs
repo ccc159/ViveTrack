@@ -12,12 +12,23 @@ namespace ViveTrack
         private CVRSystem vr = null;
         public TrackedDevicePose_t[] Poses = new TrackedDevicePose_t[OpenVR.k_unMaxTrackedDeviceCount];
         public VrTrackedDevices TrackedDevices;
+        public string errorMsg;
+        public bool Success;
 
         public OpenvrWrapper()
         {
             //Initialize OpenVR  
             EVRInitError eError = EVRInitError.None;
             vr = OpenVR.Init(ref eError,EVRApplicationType.VRApplication_Background);
+            if (eError != EVRInitError.None)
+            {
+                ReportError(eError);
+                OpenVR.Shutdown();
+                Success = false;
+                return;
+            }
+
+            Success = true;
             TrackedDevices = new VrTrackedDevices(this.vr);
             //Initializing object to hold indexes for various tracked objects 
             vr.GetDeviceToAbsoluteTrackingPose(ETrackingUniverseOrigin.TrackingUniverseStanding, 0, Poses);
@@ -28,6 +39,27 @@ namespace ViveTrack
                 if (Poses[i].bPoseIsValid)TrackedDevices.AddTrackedDevice(i);
             }
         }
- 
+
+        private void ReportError(EVRInitError error)
+        {
+            switch (error)
+            {
+                case EVRInitError.None:
+                    break;
+                case EVRInitError.VendorSpecific_UnableToConnectToOculusRuntime:
+                    errorMsg = ("SteamVR Initialization Failed!  Make sure device is on, Oculus runtime is installed, and OVRService_*.exe is running.");
+                    break;
+                case EVRInitError.Init_VRClientDLLNotFound:
+                    errorMsg = ("SteamVR drivers not found!  They can be installed via Steam under Library > Tools.  Visit http://steampowered.com to install Steam.");
+                    break;
+                case EVRInitError.Driver_RuntimeOutOfDate:
+                    errorMsg = ("SteamVR Initialization Failed!  Make sure device's runtime is up to date.");
+                    break;
+                default:
+                    errorMsg = (OpenVR.GetStringForHmdError(error));
+                    break;
+            }
+        }
+
     }
 }
