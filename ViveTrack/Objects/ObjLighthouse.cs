@@ -3,21 +3,23 @@ using System.Collections.Generic;
 
 using Grasshopper.Kernel;
 using Rhino.Geometry;
+using ViveTrack.Properties;
 
-namespace ViveTrack
+namespace ViveTrack.Objects
 {
-    public class DeviceTracking : GH_Component
+    public class ObjLighthouse : GH_Component
     {
-        public VrTrackedDevice CurrenTrackedDevice;
+        public GeometryBase lighthouse;
         /// <summary>
-        /// Initializes a new instance of the DeviceTracking class.
+        /// Initializes a new instance of the ObjLighthouse class.
         /// </summary>
-        public DeviceTracking()
-          : base("DeviceTracking", "DeviceTracking",
+        public ObjLighthouse()
+          : base("ObjLighthouse", "ObjLighthouse",
               "Description",
-              "ViveTrack", "ViveTrack")
+              "ViveTrack", "Objects")
         {
-            CurrenTrackedDevice = new VrTrackedDevice();
+            lighthouse = GH_Convert.ByteArrayToCommonObject<GeometryBase>(System.Convert.FromBase64String(Resources.lighthouse));
+            this.Hidden = Hidden;
         }
 
         /// <summary>
@@ -25,8 +27,6 @@ namespace ViveTrack
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddGenericParameter("Vive", "Vive", "Passing Vive Runtime to current component",GH_ParamAccess.item);
-            pManager.AddIntegerParameter("Index", "Index", "Index of the device that you want to track",GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -34,11 +34,7 @@ namespace ViveTrack
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddPlaneParameter("Plane", "Plane", "The tracking device plane representation",GH_ParamAccess.item);
-            pManager.AddVectorParameter("Translation", "Translation", "3D vector", GH_ParamAccess.item);
-            pManager.AddGenericParameter("Quaternion", "Quaternion", "", GH_ParamAccess.list);
-
-
+            pManager.AddGeometryParameter("Lighthouse", "Lighthouse", "", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -47,15 +43,7 @@ namespace ViveTrack
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            OpenvrWrapper temp = null;
-            int index = -1;
-            DA.GetData("Vive", ref temp);
-            DA.GetData("Index", ref index);
-            if (index >= 0 && index < 16) CurrenTrackedDevice = temp.TrackedDevices.AllDevices[index];
-            CurrenTrackedDevice.ConvertPose();
-            DA.SetData("Translation", CurrenTrackedDevice.Translation);
-            DA.SetData("Quaternion", CurrenTrackedDevice.Quaternion);
-
+            DA.SetData(0, lighthouse);
         }
 
         /// <summary>
@@ -76,7 +64,7 @@ namespace ViveTrack
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("{15988350-83b4-44f7-95b6-efcd625b10fe}"); }
+            get { return new Guid("{bfe9589b-d69d-43b2-9754-5eb6a08af0b3}"); }
         }
     }
 }

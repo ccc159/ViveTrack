@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Configuration;
 using System.Text;
 using System.Threading.Tasks;
 using Valve.VR;
@@ -17,6 +18,7 @@ namespace ViveTrack
         public int TrackingReferences = 0;
         public int NumDetected = 0;
         public Dictionary<int, VrTrackedDevice>  AllDevices;
+        public Dictionary<string, List<int>> IndexesByClasses;
         public TrackedDevicePose_t[] Poses = new TrackedDevicePose_t[OpenVR.k_unMaxTrackedDeviceCount];
 
 
@@ -25,6 +27,14 @@ namespace ViveTrack
         {
             this.vr = ivr;
             AllDevices = new Dictionary<int, VrTrackedDevice>();
+            IndexesByClasses = new Dictionary<string, List<int>>
+            {
+                {"HMD", new List<int>()},
+                {"Controller", new List<int>()},
+                {"Tracker", new List<int>()},
+                {"Lighthouse", new List<int>()}
+            };
+
         }
 
         public void AddTrackedDevice(int index)
@@ -37,7 +47,19 @@ namespace ViveTrack
         public string Summary()
         {
             if (NumDetected == 0) return "No devices detected";
-            else return $"Found: HDMs x {HMDs} , Controllers x {Controllers}, Trackers x {Trackers}, Lighthouses x {TrackingReferences}";
+            else return $"Found:\n" +
+                        $"HDMs: x{HMDs}  {PrintIndexes(this.IndexesByClasses["HMD"])}\n" + 
+                        $"Controllers: x{Controllers} {PrintIndexes(this.IndexesByClasses["Controller"])}\n" +
+                        $"Trackers: x{Trackers} {PrintIndexes(this.IndexesByClasses["Tracker"])}\n" +
+                        $"Lighthouses: x{TrackingReferences} {PrintIndexes(this.IndexesByClasses["Lighthouse"])}";
+        }
+
+        public string PrintIndexes(List<int> indexes)
+        {
+            string msg = "Index: ";
+            if (indexes.Count == 0) return "";
+            foreach (var index in indexes)msg += index + ",";
+            return msg.Remove(msg.Length - 1);
         }
 
         public void UpdatePoses()

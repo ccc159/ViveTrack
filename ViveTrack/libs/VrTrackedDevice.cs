@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Valve.VR;
 using Rhino.Geometry;
+using System.Numerics;
+using Quaternion = Rhino.Geometry.Quaternion;
 
 namespace ViveTrack
 {
@@ -19,10 +21,10 @@ namespace ViveTrack
         public string SerialNumber { get { return GetStringProperty(ETrackedDeviceProperty.Prop_SerialNumber_String); } }
         public HmdMatrix34_t Pose;
         public Transform Matrix4x4;
-        public float[] Euler;
-        public float[] Translation;
-        public float[] Quaternion;
-   
+        public Vector3d Translation;
+        public Quaternion Quaternion;
+
+
 
 
 
@@ -35,10 +37,7 @@ namespace ViveTrack
 
         }
 
-        public VrTrackedDevice()
-        {
-
-        }
+        public VrTrackedDevice(){}
 
         string GetStringProperty(ETrackedDeviceProperty prop)
         {
@@ -73,21 +72,25 @@ namespace ViveTrack
             if (type == ETrackedDeviceClass.Controller)
             {
                 this.TrackedDevices.Controllers += 1;
+                this.TrackedDevices.IndexesByClasses["Controller"].Add(Convert.ToInt16(index));
                 return "Controller";
             }
             if (type == ETrackedDeviceClass.HMD)
             {
                 this.TrackedDevices.HMDs += 1;
+                this.TrackedDevices.IndexesByClasses["HMD"].Add(Convert.ToInt16(index));
                 return "HMD";
             }
             if (type == ETrackedDeviceClass.GenericTracker)
             {
                 this.TrackedDevices.Trackers += 1;
+                this.TrackedDevices.IndexesByClasses["Tracker"].Add(Convert.ToInt16(index));
                 return "Tracker";
             }
             if (type == ETrackedDeviceClass.TrackingReference)
             {
                 this.TrackedDevices.TrackingReferences += 1;
+                this.TrackedDevices.IndexesByClasses["Lighthouse"].Add(Convert.ToInt16(index));
                 return "Lighthouse";
             }
             return "unknown";
@@ -97,28 +100,29 @@ namespace ViveTrack
         {
             GetMatrix4x4FromPose();
             GetTranslationFromPose();
-            GetEulerFromPose();
             GetQuaternionFromPose();
         }
 
         public void GetMatrix4x4FromPose()
         {
-            var a = Pose.m0;
+           
         }
 
         public void GetTranslationFromPose()
         {
-            
-        }
-
-        public void GetEulerFromPose()
-        {
-
+            this.Translation = new Vector3d(Pose.m3, Pose.m7, Pose.m11);
         }
 
         public void GetQuaternionFromPose()
         {
-
+            var w = Math.Sqrt(Math.Max(0, 1 + Pose.m0 + Pose.m5 + Pose.m10)) / 2;
+            var x = Math.Sqrt(Math.Max(0, 1 + Pose.m0 - Pose.m5 - Pose.m10)) / 2;
+            var y = Math.Sqrt(Math.Max(0, 1 - Pose.m0 + Pose.m5 - Pose.m10)) / 2;
+            var z = Math.Sqrt(Math.Max(0, 1 - Pose.m0 - Pose.m5 + Pose.m10)) / 2;
+            x = Math.Abs(x) * Math.Sign(Pose.m9 - Pose.m6);
+            y = Math.Abs(y) * Math.Sign(Pose.m2 - Pose.m8);
+            z = Math.Abs(z) * Math.Sign(Pose.m4 - Pose.m1);
+            this.Quaternion = new Rhino.Geometry.Quaternion(x,y,z,w);
         }
 
         public override string ToString()

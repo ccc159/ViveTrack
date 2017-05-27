@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ViveTrack</RootNamespace>
     <AssemblyName>ViveTrack</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
@@ -39,6 +39,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
@@ -65,15 +66,34 @@
     <Compile Include="libs\VrTrackedDevices.cs" />
     <None Include="libs\LighthouseTracking.cs" />
     <Compile Include="libs\OpenvrWrapper.cs" />
+    <Compile Include="Objects\ObjController.cs" />
+    <Compile Include="Objects\ObjHMD.cs" />
+    <Compile Include="Objects\ObjLighthouse.cs" />
+    <Compile Include="Objects\ObjTracker.cs" />
     <Compile Include="Properties\openvr_api.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="StartVive.cs" />
     <Compile Include="ViveTrackInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="resources\controller.bytes" />
+    <None Include="resources\HMD.bytes" />
+    <None Include="resources\lighthouse.bytes" />
+    <None Include="resources\tracker.bytes" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Properties\openvr_api.dll">
+    <Content Include="openvr_api.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
