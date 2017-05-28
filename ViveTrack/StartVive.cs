@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Diagnostics;
+using System.Windows.Forms;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
@@ -9,6 +10,7 @@ namespace ViveTrack
     public class StartVive : GH_Component
     {
         public OpenvrWrapper Vive;
+        public string OutMsg;
         /// <summary>
         /// Initializes a new instance of the StartVive class.
         /// </summary>
@@ -43,19 +45,47 @@ namespace ViveTrack
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
+            if (!DetectSteamVR())
+            {
+                DA.SetData("MSG", "SteamVR not running.");
+                AskforRunningSteamVR();
+                return;
+            }
             if (Vive.Success)
             {
-                DA.SetData("MSG", Vive.TrackedDevices.Summary());
+                OutMsg = Vive.TrackedDevices.Summary();
                 DA.SetDataList("Index", Vive.TrackedDevices.Indexes);
                 DA.SetData("Vive", Vive);
                 Vive.TrackedDevices.UpdatePoses();
             }
             else
             {
-                var msg = "Vive is not running!! Detailed Reason:\n" + Vive.errorMsg + "\nCheck online the error code for more information.";
-                DA.SetData("MSG", msg);
+                OutMsg = "Vive is not setup correctly!! Detailed Reason:\n" + Vive.errorMsg + "\nCheck online the error code for more information.";
             }
+            DA.SetData("MSG", OutMsg);
 
+        }
+
+        public bool DetectSteamVR()
+        {
+            Process[] vrServer = Process.GetProcessesByName("vrserver");
+            Process[] vrMonitor = Process.GetProcessesByName("vrmonitor");
+            if ((vrServer.Length != 0) && (vrMonitor.Length != 0)) return true;
+            OutMsg = "SteamVR not running correctly.(Not detecting 'vrserver' and 'vrmonitor')\nDo you want to start SteamVR now?";
+            return false;
+        }
+
+        public void AskforRunningSteamVR()
+        {
+            DialogResult dialogResult = MessageBox.Show($@"{OutMsg}", @"SteamVR not running", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Steam\steamapps\common\SteamVR\bin\win64\vrstartup.exe");
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }
         }
 
         /// <summary>
