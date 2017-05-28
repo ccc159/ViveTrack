@@ -11,6 +11,7 @@ namespace ViveTrack
     {
         public OpenvrWrapper Vive;
         public string OutMsg;
+        public bool UserPermit = true;
         /// <summary>
         /// Initializes a new instance of the StartVive class.
         /// </summary>
@@ -45,6 +46,7 @@ namespace ViveTrack
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
+            if (!UserPermit) return;
             if (!DetectSteamVR())
             {
                 DA.SetData("Msg", "SteamVR not running.");
@@ -85,7 +87,7 @@ namespace ViveTrack
             }
             else if (dialogResult == DialogResult.No)
             {
-                //do something else
+                UserPermit = false;
             }
         }
 
@@ -100,6 +102,21 @@ namespace ViveTrack
                 // return Resources.IconForThisComponent;
                 return null;
             }
+        }
+
+        protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
+        {
+            base.AppendAdditionalComponentMenuItems(menu);
+            Menu_AppendItem(menu, "ForceRecompute", Menu_Click_Pause, true, false).ToolTipText = @"Click to reset the component.";
+
+
+        }
+
+        private void Menu_Click_Pause(object sender, EventArgs e)
+        {
+            this.Vive.Conect();
+            UserPermit = true;
+            this.ExpireSolution(true);
         }
 
         /// <summary>

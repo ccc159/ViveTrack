@@ -65,6 +65,11 @@ namespace ViveTrack
             DA.GetData("Vive", ref temp);
             DA.GetData("Index", ref index);
             if (index < 0 || index >= 16) return;
+            if (!temp.TrackedDevices.AllDevices.ContainsKey(index))
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Current index doesn't exist in tracked devices.");
+                return;
+            }
             CurrenTrackedDevice = temp.TrackedDevices.AllDevices[index];
             this.Message = CurrenTrackedDevice.device_class;
             CurrenTrackedDevice.ConvertPose();

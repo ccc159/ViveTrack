@@ -20,6 +20,11 @@ namespace ViveTrack
             Conect();
         }
 
+        ~OpenvrWrapper()
+        {
+            OpenVR.Shutdown();
+        }
+
         public void Conect()
         {
             //Initialize OpenVR  
