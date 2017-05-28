@@ -48,10 +48,10 @@ namespace ViveTrack
         {
             if (NumDetected == 0) return "No devices detected";
             else return $"Found:\n" +
-                        $"HDMs: x{HMDs}  {PrintIndexes(this.IndexesByClasses["HMD"])}\n" + 
-                        $"Controllers: x{Controllers} {PrintIndexes(this.IndexesByClasses["Controller"])}\n" +
-                        $"Trackers: x{Trackers} {PrintIndexes(this.IndexesByClasses["Tracker"])}\n" +
-                        $"Lighthouses: x{TrackingReferences} {PrintIndexes(this.IndexesByClasses["Lighthouse"])}";
+                        $"HDMs: {HMDs}  {PrintIndexes(this.IndexesByClasses["HMD"])}\n" + 
+                        $"Controllers: {Controllers} {PrintIndexes(this.IndexesByClasses["Controller"])}\n" +
+                        $"Trackers: {Trackers} {PrintIndexes(this.IndexesByClasses["Tracker"])}\n" +
+                        $"Lighthouses: {TrackingReferences} {PrintIndexes(this.IndexesByClasses["Lighthouse"])}";
         }
 
         public string PrintIndexes(List<int> indexes)

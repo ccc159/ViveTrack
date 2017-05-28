@@ -17,9 +17,14 @@ namespace ViveTrack
 
         public OpenvrWrapper()
         {
+            Conect();
+        }
+
+        public void Conect()
+        {
             //Initialize OpenVR  
             EVRInitError eError = EVRInitError.None;
-            vr = OpenVR.Init(ref eError,EVRApplicationType.VRApplication_Background);
+            vr = OpenVR.Init(ref eError, EVRApplicationType.VRApplication_Background);
             if (eError != EVRInitError.None)
             {
                 ReportError(eError);
@@ -36,7 +41,7 @@ namespace ViveTrack
             //# Iterate through the pose list to find the active Devices and determine their type
             for (int i = 0; i < OpenVR.k_unMaxTrackedDeviceCount; i++)
             {
-                if (Poses[i].bPoseIsValid)TrackedDevices.AddTrackedDevice(i);
+                if (Poses[i].bPoseIsValid) TrackedDevices.AddTrackedDevice(i);
             }
         }
 

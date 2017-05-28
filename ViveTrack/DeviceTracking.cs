@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 using Grasshopper.Kernel;
 using Rhino.Geometry;
+using System.Numerics;
+using GH_IO.Serialization;
+using Plane = Rhino.Geometry.Plane;
+using Quaternion = System.Numerics.Quaternion;
 
 namespace ViveTrack
 {
@@ -10,6 +14,12 @@ namespace ViveTrack
     {
         public VrTrackedDevice CurrenTrackedDevice;
         public Plane XyPlane;
+        public bool Paused = false;
+
+        private Plane OldPlane;
+        private Vector3d OldTranslation;
+        private Quaternion OldQuaternion;
+        private Transform OldTransform;
         /// <summary>
         /// Initializes a new instance of the DeviceTracking class.
         /// </summary>
@@ -39,7 +49,7 @@ namespace ViveTrack
             pManager.AddPlaneParameter("Plane", "Plane", "The tracking device plane representation",GH_ParamAccess.item);
             pManager.AddVectorParameter("Translation", "Translation", "3D vector", GH_ParamAccess.item);
             pManager.AddGenericParameter("Quaternion", "Quaternion", "", GH_ParamAccess.list);
-            pManager.AddGenericParameter("TransformationMatrix", "TransformationMatrix", "", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Transform", "Transform", "", GH_ParamAccess.item);
 
 
         }
@@ -56,13 +66,21 @@ namespace ViveTrack
             DA.GetData("Index", ref index);
             if (index < 0 || index >= 16) return;
             CurrenTrackedDevice = temp.TrackedDevices.AllDevices[index];
+            this.Message = CurrenTrackedDevice.device_class;
             CurrenTrackedDevice.ConvertPose();
             XyPlane = Plane.WorldXY;
             XyPlane.Transform(CurrenTrackedDevice.CorrectedMatrix4X4);
-            DA.SetData("Plane", XyPlane);
-            DA.SetData("Translation", CurrenTrackedDevice.CorrectedTranslation);
-            DA.SetData("Quaternion", CurrenTrackedDevice.CorrectedQuaternion);
-            DA.SetData("TransformationMatrix", CurrenTrackedDevice.CorrectedMatrix4X4);
+            if (!Paused)
+            {
+                OldPlane = XyPlane;
+                OldTranslation = CurrenTrackedDevice.CorrectedTranslation;
+                OldQuaternion = CurrenTrackedDevice.CorrectedQuaternion;
+                OldTransform = CurrenTrackedDevice.CorrectedMatrix4X4;
+            }
+            DA.SetData("Plane", OldPlane);
+            DA.SetData("Translation", OldTranslation);
+            DA.SetData("Quaternion", OldQuaternion);
+            DA.SetData("Transform", OldTransform);
         }
 
         /// <summary>
@@ -76,6 +94,27 @@ namespace ViveTrack
                 // return Resources.IconForThisComponent;
                 return null;
             }
+        }
+
+        protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
+        {
+            base.AppendAdditionalComponentMenuItems(menu);
+            Menu_AppendItem(menu, "Pause", Menu_Click_Pause,true,false).ToolTipText=@"Click Pause to pause the updation of current tracking device.";
+
+            
+        }
+
+        private void Menu_Click_Pause(object sender, EventArgs e)
+        {
+            this.RecordUndoEvent("Pause");
+            Paused = !Paused;
+            this.ExpireSolution(true);
+        }
+
+        public override bool Write(GH_IWriter writer)
+        {
+            writer.SetBoolean("Pause",Paused);
+            return base.Write(writer);
         }
 
         /// <summary>

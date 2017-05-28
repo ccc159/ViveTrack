@@ -12,7 +12,7 @@ namespace ViveTrack
 {
     public class VrTrackedDevice
     {
-        private string device_class;
+        public string device_class;
         private uint index;
         private CVRSystem vr;
         private VrTrackedDevices TrackedDevices;

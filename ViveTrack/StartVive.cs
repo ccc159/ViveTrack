@@ -34,7 +34,7 @@ namespace ViveTrack
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddTextParameter("MSG", "MSG", "Running Information of your Vive", GH_ParamAccess.item);
+            pManager.AddTextParameter("Msg", "Msg", "Running Information of your Vive", GH_ParamAccess.item);
             pManager.AddGenericParameter("Vive", "Vive", "", GH_ParamAccess.item);
             pManager.AddIntegerParameter("Index", "Index", "The Index of running devices, from 0-16.",GH_ParamAccess.list);
         }
@@ -47,7 +47,7 @@ namespace ViveTrack
         {
             if (!DetectSteamVR())
             {
-                DA.SetData("MSG", "SteamVR not running.");
+                DA.SetData("Msg", "SteamVR not running.");
                 AskforRunningSteamVR();
                 return;
             }
@@ -61,8 +61,9 @@ namespace ViveTrack
             else
             {
                 OutMsg = "Vive is not setup correctly!! Detailed Reason:\n" + Vive.errorMsg + "\nCheck online the error code for more information.";
+                Vive.Conect();
             }
-            DA.SetData("MSG", OutMsg);
+            DA.SetData("Msg", OutMsg);
 
         }
 
