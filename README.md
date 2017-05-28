@@ -1,7 +1,7 @@
 # ViveTrack
 ViveTrack is a **grasshopper plugin** that allows you to track your **HTC Vive** devices [6DoF](https://en.wikipedia.org/wiki/Six_degrees_of_freedom?oldformat=true), for instance your HMD, controllers, trackers and even customized trackers. It is vastly simplified for specially architecture students and you can basiclly plug&use without complicated setup.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/yiwLhc4nc2A" frameborder="0" allowfullscreen></iframe>
+[![](http://img.youtube.com/vi/yiwLhc4nc2A/0.jpg)](http://www.youtube.com/watch?v=yiwLhc4nc2A)
 
 ### Usage
 Currently ViveTrack is only used for tracking 6DoF positions of Vive devices, which can be used for Indoor Positioning, for instance tracking your DIY robots, drones, users hands and other stuff that you want to get position into Rhino/Grasshopper.
