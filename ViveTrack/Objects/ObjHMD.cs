@@ -15,10 +15,11 @@ namespace ViveTrack.Objects
         /// </summary>
         public ObjHMD()
           : base("ObjHMD", "ObjHMD",
-              "Description",
+              "HTC Vive HMD 3D model",
               "ViveTrack", "Objects")
         {
             HMD = GH_Convert.ByteArrayToCommonObject<GeometryBase>(System.Convert.FromBase64String(Resources.HMD));
+            (this as IGH_PreviewObject).Hidden = true;
         }
 
         /// <summary>
@@ -33,7 +34,7 @@ namespace ViveTrack.Objects
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddGeometryParameter("HMD", "HMD", "", GH_ParamAccess.item);
+            pManager.AddGeometryParameter("HMD", "HMD", "HTC Vive HMD 3D model", GH_ParamAccess.item);
         }
 
         /// <summary>

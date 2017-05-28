@@ -15,11 +15,11 @@ namespace ViveTrack.Objects
         /// </summary>
         public ObjLighthouse()
           : base("ObjLighthouse", "ObjLighthouse",
-              "Description",
+              "HTC Vive Lighthouse 3D model",
               "ViveTrack", "Objects")
         {
             lighthouse = GH_Convert.ByteArrayToCommonObject<GeometryBase>(System.Convert.FromBase64String(Resources.lighthouse));
-            this.Hidden = Hidden;
+            (this as IGH_PreviewObject).Hidden = true;
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace ViveTrack.Objects
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddGeometryParameter("Lighthouse", "Lighthouse", "", GH_ParamAccess.item);
+            pManager.AddGeometryParameter("Lighthouse", "Lighthouse", "HTC Vive Lighthouse 3D model", GH_ParamAccess.item);
         }
 
         /// <summary>
