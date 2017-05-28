@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
@@ -78,12 +79,13 @@ namespace ViveTrack
             return false;
         }
 
-        public void AskforRunningSteamVR()
+        public async void AskforRunningSteamVR()
         {
             DialogResult dialogResult = MessageBox.Show($@"{OutMsg}", @"SteamVR not running", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
                 System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Steam\steamapps\common\SteamVR\bin\win64\vrstartup.exe");
+                await Task.Delay(7000);
             }
             else if (dialogResult == DialogResult.No)
             {
