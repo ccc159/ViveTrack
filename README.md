@@ -28,7 +28,7 @@ There are a few things you need to install and setup before using ViveTrack:
  **4.** If SteamVR is running, close and restart it. <br>
  
  ### Install ViveTrack
- Installation of ViveTrack is a normal process like installing other Grasshopper plugins. Simply download ```ViveTrack.gha``` and ```openvr_api.dll```, copy them into your ```Grasshopper/Libraries``` Folder. Remember to unblock them.
+ Installation of ViveTrack is a normal process like installing other Grasshopper plugins. Simply download [**ViveTrack**](https://github.com/ccc159/ViveTrack/releases), unzip them, copy ```ViveTrack.gha``` and ```openvr_api.dll``` into your ```Grasshopper/Libraries``` Folder. Remember to unblock them.
  
  
  
