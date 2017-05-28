@@ -70,7 +70,17 @@ namespace ViveTrack.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to pNtVdBtL0CDgYWYmJ/EoHMdhZmbmOJw4zMzMzMzMzOAwM98wx2Fm8pb/3Yc9+7r1HY3ksWSNJHd1V7cGQREESYJIvk4OAYNNjeqt23TsVKJThw6dOsakqh3ftVubTh0L5YrNFpsjK0RstjwxqUr0aN+9R9f4Qh3je3Tv2rR9TKqqPZq1b9O8Qnyfmp3axcO9c2XPnjdbfL48zfPkypUrR1Yy+Rn0//nDsWXiO3WI7961T2yl+G6tCdhP9/zfz8E17dq8dZue8TladGA7dY7v2LFH12bdiBZNuzdNvhPDMFjy4SnpECT5UY1PkAKLww05eTP4D4NgvwZhSG+48TsJQwzY+fTazcplXl5VDz5DlGFo+CHzHr/BH/hdzRkYkiu2JILstZD/Jz4U+f/7GUG+THhx4GplMgFX0yV4+OtC2JhGhTuXjykEx1jk/7oc/L8u/8++/xPY/2xTwoslkFSIh5CAQnzEBBaiIDRQEQFhQGn0PrISTEA6IKNAR6Q7MhoM [rest of string was truncated]&quot;;.
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap DeviceTracking {
+            get {
+                object obj = ResourceManager.GetObject("DeviceTracking", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to pNxjmCNd9CDwMm/ZVemZ6crY6rHRY/sd2z22bdu2bdu2bdt7+r/7YZ/9uuf3pJJU+CR1z70ntyoYjmHYP4jE88RABCyqVG7RMqFd0XZt27ZLSJ+setOOnVq2S8gflzFLxmyZITJmyZk+WdEubTp36dg0f0LTLp07NmyTPlnFLo3atGxcpmmPqu1aN4V7x2XNmitL09w5G+eMi4vLlplOfAXjf544Y4mm7do27dyxR8ZyTTu1oGA92/V/v4bQsGPjFi27Ns3WpC3frn3ThIQuHRt1opo07Nww8U4cxxGJb09NhWGJj6p/lEY8CReUxEX8bw4jfvYjsAJw4dc/AjNh5ePL18qXeHFJ2/cEUwfh4fsMO4I6v+E2fwqBxWUshmE7bez/ifcF//+uY9jnMc/3XCpP750X13mPT77KT4yoVyCnbRXAsP4F/6/Tvv/r9P+s+z9B/M+SwpKCZBiN+YDBLCwANsZiKtAwDkMgHl+K3QVjsGFYW5CADcc6g/5YHqwo [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string HMD {
             get {
@@ -88,11 +98,61 @@ namespace ViveTrack.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to fJ0D0CRb026ru9hV3WPbtnHGtu15x7Y9c8a2bdu2bdu2567cc/6IP27cuGfF7nyezNxZu6ur5sP5oPk0TfvDXxLlr6Cfj0oVmzVv07ZQ29at27ZJk6Bq4w4dm7dtkydruozpMmfgr3QZs6dJUKhzq06dOzTO06Zx504dGrRKk6B854atmoeVaty9ctuWjenOmilTjoyNc2YPy541a9bMGUy5QmQ1OF2xxm1bN+7UoXu6Mo07NjPI213+XsNt0CGsWfMujTM3ah1o265xmzadOzTsaDRq0KmBNDmO45fjRUiuabKr3mEzGNAR4eXj5h1X83/v69cuIn788WtRSD68eKVssWcXIu55pEUY6Ev0Nu222LV/UrNuu1pWt4ymZSytaXdLF7v65tGjfBHHmZVr1nyar2sJO26u7I/z/eo7/0LDPY/zxUhbuPKPhN/ynU+YuW+va5HyZ3h0Y8X8GG7+CoUq3Bl8K2H+f9+fOHJq19R8N+es/B0jV9d8v2YW2GVn [rest of string was truncated]&quot;;.
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ObjController {
+            get {
+                object obj = ResourceManager.GetObject("ObjController", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ObjHMD {
+            get {
+                object obj = ResourceManager.GetObject("ObjHMD", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ObjLighthouse {
+            get {
+                object obj = ResourceManager.GetObject("ObjLighthouse", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ObjTracker {
+            get {
+                object obj = ResourceManager.GetObject("ObjTracker", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to fJ0D0CRb026ru9hV3WPbtnHGtu15x7Y9c8a2bdu2bdu2567cc/6IP27cuGfF7nyezNxZu6ur5sP5oPk0TfvDXxLlr6Cfj0oVmzVv07ZQ29at27ZJk6Bq4w4dm7dtkydruozpMmfgr3QZs6dJUKhzq06dOzTO06Zx504dGrRKk6B854atmoeVaty9ctuWjenOmilTjoyNc2YPy541a9bMGUy5QmQ1OF2xxm1bN+7UoXu6Mo07NjPI213+XsNt0CGsWfMujTM3ah1o265xmzadOzTsaDRq0KmBNDmO45fjRUiuabKr3mEzGNAR4eWj4D1X83/v69dyIX788WtRSD68eKVssWcXIu55pEUY6Ev0Nu222LV/Umt1x9WyumU0LWNpTbtbutjVN48e5Ys4zqxcs+bTfF1L2HFzZX+c71ff+Rca7nmcL0bawpV/JPyW73zCzH17XYuUP8OjGyvmx3DzVyhU4c7gWwnz//v+xJFTu6bmuzln5e8Yubrm+zWzwK5z [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string tracker {
             get {
                 return ResourceManager.GetString("tracker", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ViveStart {
+            get {
+                object obj = ResourceManager.GetObject("ViveStart", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

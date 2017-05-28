@@ -5,6 +5,7 @@ using Grasshopper.Kernel;
 using Rhino.Geometry;
 using System.Numerics;
 using GH_IO.Serialization;
+using ViveTrack.Properties;
 using Plane = Rhino.Geometry.Plane;
 using Quaternion = System.Numerics.Quaternion;
 
@@ -47,9 +48,9 @@ namespace ViveTrack
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
             pManager.AddPlaneParameter("Plane", "Plane", "The tracking device plane representation",GH_ParamAccess.item);
-            pManager.AddVectorParameter("Translation", "Translation", "3D vector", GH_ParamAccess.item);
-            pManager.AddGenericParameter("Quaternion", "Quaternion", "", GH_ParamAccess.list);
-            pManager.AddGenericParameter("Transform", "Transform", "", GH_ParamAccess.item);
+            pManager.AddVectorParameter("Translation", "Translation", "3D position vector of tracked device", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Quaternion", "Quaternion", "Quaternion of tracked device", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Transform", "Transform", "Transformation matrix of tracked device", GH_ParamAccess.item);
 
 
         }
@@ -97,7 +98,7 @@ namespace ViveTrack
             {
                 //You can add image files to your project resources and access them like this:
                 // return Resources.IconForThisComponent;
-                return null;
+                return Resources.DeviceTracking;
             }
         }
 

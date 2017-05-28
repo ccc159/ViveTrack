@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
+using ViveTrack.Properties;
 
 namespace ViveTrack
 {
@@ -37,7 +38,7 @@ namespace ViveTrack
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
             pManager.AddTextParameter("Msg", "Msg", "Running Information of your Vive", GH_ParamAccess.item);
-            pManager.AddGenericParameter("Vive", "Vive", "", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Vive", "Vive", "The Core of Vive tracking, needs to be passed to following component", GH_ParamAccess.item);
             pManager.AddIntegerParameter("Index", "Index", "The Index of running devices, from 0-16.",GH_ParamAccess.list);
         }
 
@@ -102,7 +103,7 @@ namespace ViveTrack
             {
                 //You can add image files to your project resources and access them like this:
                 // return Resources.IconForThisComponent;
-                return null;
+                return Resources.ViveStart;
             }
         }
 

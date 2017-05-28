@@ -88,6 +88,12 @@
     <Content Include="openvr_api.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="resources\ViveStart.png" />
+    <None Include="resources\ObjTracker.png" />
+    <None Include="resources\ObjLighthouse.png" />
+    <None Include="resources\ObjHMD.png" />
+    <None Include="resources\ObjController.png" />
+    <None Include="resources\DeviceTracking.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

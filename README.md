@@ -18,6 +18,16 @@ Currently ViveTrack is only used for tracking 6DoF positions of Vive devices, wh
 
 There are a few things you need to install and setup before using ViveTrack:
 
- * [optional]**.Net Framework 4.6** (This usually comes with Windows 10. You can check from Apps&Features in windows 10 if it's installed)
- * **Install SteamVR and Setup Vive**: Please follow the official [HTC Vive Pre: Installation Guide](https://support.steampowered.com/kb_article.php?ref=2001-UXCM-4439) to setup your vive. Tow lighthouses are recommended to be fixed on the wall to avoid errors due to lighthouse vibration.
- * [optional] If you don't have HMD or don't want use HMD in your tracking system, you have to disable your "requireHmd" setting in your SteamVR. **1.** update your SteamVR to **Beta** Version.
+ * (optional)**.Net Framework 4.6** (This usually comes with Windows 10. You can check from Apps&Features in windows 10 if it's installed)
+ * **Install SteamVR and Setup Vive**: Please follow the official [HTC Vive Pre: Installation Guide](https://support.steampowered.com/kb_article.php?ref=2001-UXCM-4439) to setup your vive(Please go through all of the steps). Please also install Steam and SteamVR at its default location. Tow lighthouses are recommended to be fixed on the wall to avoid errors due to lighthouse vibration.
+ * (optional) If you don't have HMD or don't want use HMD in your tracking system, you have to disable your "requireHmd" setting in your SteamVR. <br>**1.** update your SteamVR to **Beta** Version.<br>
+ <img src="https://raw.githubusercontent.com/ccc159/ViveTrack/master/ViveTrack/utils/SteamVR_Beta.jpg"  width="500"><br>
+ **2.** Open the configuration file ```default.vrsettings``` with a text editor following <code>C:\Program Files (x86)\Steam\steamapps\common\SteamVR\resources\settings\default.vrsettings</code><br>
+ **3.** Change ```requireHmd``` key from ```true``` to ```false``` <br>
+ **4.** If SteamVR is running, close and restart it. <br>
+ 
+ ### Install ViveTrack
+ Installation of ViveTrack is a normal process like installing other Grasshopper plugins. Simply download ```ViveTrack.gha``` and ```openvr_api.dll```, copy them into your ```Grasshopper/Libraries``` Folder. Remember to unblock them.
+ 
+ 
+ 
