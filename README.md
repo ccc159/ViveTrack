@@ -21,7 +21,7 @@ There are a few things you need to install and setup before using ViveTrack:
 
  * (optional)**.Net Framework 4.6** (This usually comes with Windows 10. You can check from Apps&Features in windows 10 if it's installed)
  * **Install SteamVR and Setup Vive**: Please follow the official [HTC Vive Pre: Installation Guide](https://support.steampowered.com/kb_article.php?ref=2001-UXCM-4439) to setup your vive(Please go through all of the steps). Please also install Steam and SteamVR at its default location. Tow lighthouses are recommended to be fixed on the wall to avoid errors due to lighthouse vibration.
- * (optional) If you don't have HMD or don't want use HMD in your tracking system, you have to disable your "requireHmd" setting in your SteamVR. <br>**1.** update your SteamVR to **Beta** Version.<br>
+ * (optional) If you don't have HMD or don't want use HMD in your tracking system, you have to disable your "requireHmd" setting in your SteamVR. **Please note, in this case your controller or tracker have to be connected to your PC with USB Cable or [Steam Dongle](http://store.steampowered.com/app/530260/Steam_Controller_Wireless_Receiver/).**<br>**1.** update your SteamVR to **Beta** Version.<br>
  <img src="https://raw.githubusercontent.com/ccc159/ViveTrack/master/ViveTrack/utils/SteamVR_Beta.jpg"  width="500"><br>
  **2.** Open the configuration file ```default.vrsettings``` with a text editor following <code>C:\Program Files (x86)\Steam\steamapps\common\SteamVR\resources\settings\default.vrsettings</code><br>
  **3.** Change ```requireHmd``` key from ```true``` to ```false``` <br>
