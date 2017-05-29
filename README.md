@@ -32,6 +32,7 @@ There are a few things you need to install and setup before using ViveTrack:
  
  ### Using Guide
  The plugin is quite self-explainary. Just download and try it out. The image below can give you some hints.
+ You need SteamVR runtime to run this plugin. You can either choose to run ```SteamVR``` from ```Steam``` first or you can let the plugin handle this:)
  <img src="https://raw.githubusercontent.com/ccc159/ViveTrack/master/ViveTrack/utils/explanation.png"  width="720"><br>
  
  
