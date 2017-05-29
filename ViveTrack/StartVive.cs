@@ -39,7 +39,7 @@ namespace ViveTrack
         {
             pManager.AddTextParameter("Msg", "Msg", "Running Information of your Vive", GH_ParamAccess.item);
             pManager.AddGenericParameter("Vive", "Vive", "The Core of Vive tracking, needs to be passed to following component", GH_ParamAccess.item);
-            pManager.AddIntegerParameter("Index", "Index", "The Index of running devices, from 0-16.",GH_ParamAccess.list);
+            //pManager.AddIntegerParameter("Index", "Index", "The Index of running devices, from 0-16.",GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace ViveTrack
             if (Vive.Success)
             {
                 OutMsg = Vive.TrackedDevices.Summary();
-                DA.SetDataList("Index", Vive.TrackedDevices.Indexes);
+                //DA.SetDataList("Index", Vive.TrackedDevices.Indexes);
                 DA.SetData("Vive", Vive);
                 Vive.TrackedDevices.UpdatePoses();
             }
