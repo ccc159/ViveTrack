@@ -61,14 +61,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DeviceTracking.cs" />
     <Compile Include="libs\VrTrackedDevice.cs" />
     <Compile Include="libs\VrTrackedDevices.cs" />
     <None Include="libs\LighthouseTracking.cs" />
     <Compile Include="libs\OpenvrWrapper.cs" />
-    <Compile Include="Objects\ObjController.cs" />
+    <Compile Include="Objects\ObjController2.cs" />
+    <Compile Include="Objects\ObjController1.cs" />
     <Compile Include="Objects\ObjHMD.cs" />
-    <Compile Include="Objects\ObjLighthouse.cs" />
+    <Compile Include="Objects\ObjLighthouse2.cs" />
+    <Compile Include="Objects\ObjLighthouse1.cs" />
     <Compile Include="Objects\ObjTracker.cs" />
     <Compile Include="Properties\openvr_api.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

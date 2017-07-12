@@ -1,36 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using GH_IO.Serialization;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
-using System.Numerics;
-using GH_IO.Serialization;
 using ViveTrack.Properties;
-using Plane = Rhino.Geometry.Plane;
-using Quaternion = System.Numerics.Quaternion;
 
-namespace ViveTrack
+namespace ViveTrack.Objects
 {
-    public class DeviceTracking : GH_Component
+    public class ObjLighthouse2 : GH_Component
     {
+        public GeometryBase lighthouse;
         public VrTrackedDevice CurrenTrackedDevice;
         public Plane XyPlane;
         public bool Paused = false;
-
         private Plane OldPlane;
-        private Vector3d OldTranslation;
-        private Quaternion OldQuaternion;
         private Transform OldTransform;
         /// <summary>
-        /// Initializes a new instance of the DeviceTracking class.
+        /// Initializes a new instance of the ObjLighthouse class.
         /// </summary>
-        public DeviceTracking()
-          : base("DeviceTracking", "DeviceTracking",
-              "Description",
-              "ViveTrack", "ViveTrack")
+        public ObjLighthouse2()
+          : base("Lighthouse2", "Lighthouse2",
+              "Tracking of HTC Vive Lighthouse",
+              "ViveTrack", "Tracking Device")
         {
+            lighthouse = GH_Convert.ByteArrayToCommonObject<GeometryBase>(System.Convert.FromBase64String(Resources.lighthouse));
             CurrenTrackedDevice = new VrTrackedDevice();
-            
+            //(this as IGH_PreviewObject).Hidden = true;
         }
 
         /// <summary>
@@ -38,8 +33,7 @@ namespace ViveTrack
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddGenericParameter("Vive", "Vive", "Passing Vive Runtime to current component",GH_ParamAccess.item);
-            pManager.AddIntegerParameter("Index", "Index", "Index of the device that you want to track",GH_ParamAccess.item);
+            pManager.AddGenericParameter("Vive", "Vive", "Passing Vive Runtime to current component", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -47,12 +41,9 @@ namespace ViveTrack
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddPlaneParameter("Plane", "Plane", "The tracking device plane representation",GH_ParamAccess.item);
-            pManager.AddVectorParameter("Translation", "Translation", "3D position vector of tracked device", GH_ParamAccess.item);
-            pManager.AddGenericParameter("Quaternion", "Quaternion", "Quaternion of tracked device", GH_ParamAccess.list);
-            pManager.AddGenericParameter("Transform", "Transform", "Transformation matrix of tracked device", GH_ParamAccess.item);
-
-
+            pManager.AddGeometryParameter("Lighthouse", "Lighthouse", "HTC Vive Lighthouse 3D model", GH_ParamAccess.item);
+            pManager.AddPlaneParameter("Plane", "Plane", "The Lighthouse plane representation", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Matrix", "Matrix", "Transformation matrix of Lighthouse", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -62,31 +53,36 @@ namespace ViveTrack
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             OpenvrWrapper temp = null;
-            int index = -1;
-            DA.GetData("Vive", ref temp);
-            DA.GetData("Index", ref index);
-            if (index < 0 || index >= 16) return;
-            if (!temp.TrackedDevices.AllDevices.ContainsKey(index))
+            if (!DA.GetData("Vive", ref temp)) return;
+            var list = temp.TrackedDevices.IndexesByClasses["Lighthouse"];
+            if (list.Count == 0)
             {
-                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Current index doesn't exist in tracked devices.");
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "No Lighthouse deteceted");
                 return;
             }
+            if (list.Count == 1)
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "There's only one Lighthouse, please use Lighthouse1");
+                return;
+            }
+            int index = temp.TrackedDevices.IndexesByClasses["Lighthouse"][1];
+
             CurrenTrackedDevice = temp.TrackedDevices.AllDevices[index];
-            this.Message = CurrenTrackedDevice.device_class;
+            this.Message = "Lighthouse2";
             CurrenTrackedDevice.ConvertPose();
             XyPlane = Plane.WorldXY;
             XyPlane.Transform(CurrenTrackedDevice.CorrectedMatrix4X4);
             if (!Paused)
             {
                 OldPlane = XyPlane;
-                OldTranslation = CurrenTrackedDevice.CorrectedTranslation;
-                OldQuaternion = CurrenTrackedDevice.CorrectedQuaternion;
                 OldTransform = CurrenTrackedDevice.CorrectedMatrix4X4;
             }
+
+            var newlighthouse = lighthouse.Duplicate();
+            newlighthouse.Transform(OldTransform);
+            DA.SetData("Lighthouse", newlighthouse);
             DA.SetData("Plane", OldPlane);
-            DA.SetData("Translation", OldTranslation);
-            DA.SetData("Quaternion", OldQuaternion);
-            DA.SetData("Transform", OldTransform);
+            DA.SetData("Matrix", OldTransform);
         }
 
         /// <summary>
@@ -98,16 +94,24 @@ namespace ViveTrack
             {
                 //You can add image files to your project resources and access them like this:
                 // return Resources.IconForThisComponent;
-                return Resources.DeviceTracking;
+                return Resources.ObjLighthouse;
             }
+        }
+
+        /// <summary>
+        /// Gets the unique ID for this component. Do not change this ID after release.
+        /// </summary>
+        public override Guid ComponentGuid
+        {
+            get { return new Guid("{2938302e-5d57-4002-997d-17a662d26663}"); }
         }
 
         protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
         {
             base.AppendAdditionalComponentMenuItems(menu);
-            Menu_AppendItem(menu, "Pause", Menu_Click_Pause,true,false).ToolTipText=@"Click Pause to pause the updation of current tracking device.";
+            Menu_AppendItem(menu, "Pause", Menu_Click_Pause, true, false).ToolTipText = @"Click Pause to pause the updation of current tracking device.";
 
-            
+
         }
 
         private void Menu_Click_Pause(object sender, EventArgs e)
@@ -119,16 +123,8 @@ namespace ViveTrack
 
         public override bool Write(GH_IWriter writer)
         {
-            writer.SetBoolean("Pause",Paused);
+            writer.SetBoolean("Pause", Paused);
             return base.Write(writer);
-        }
-
-        /// <summary>
-        /// Gets the unique ID for this component. Do not change this ID after release.
-        /// </summary>
-        public override Guid ComponentGuid
-        {
-            get { return new Guid("{15988350-83b4-44f7-95b6-efcd625b10fe}"); }
         }
     }
 }

@@ -5,4 +5,3 @@ C:\Users\Chen\documents\visual studio 2017\Projects\ViveTrack\ViveTrack\obj\Debu
 C:\Users\Chen\documents\visual studio 2017\Projects\ViveTrack\ViveTrack\obj\Debug\ViveTrack.dll
 C:\Users\Chen\documents\visual studio 2017\Projects\ViveTrack\ViveTrack\obj\Debug\ViveTrack.pdb
 C:\Users\Chen\documents\visual studio 2017\Projects\ViveTrack\ViveTrack\bin\openvr_api.dll
-C:\Users\Chen\documents\visual studio 2017\Projects\ViveTrack\ViveTrack\obj\Debug\ViveTrack.csprojResolveAssemblyReference.cache

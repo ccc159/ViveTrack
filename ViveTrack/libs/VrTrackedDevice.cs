@@ -116,7 +116,26 @@ namespace ViveTrack
             CorrectedMatrix4X4 = ConvertFromSystemMatrixToRhinoMatrix(multiply);
         }
 
-        public Transform ConvertFromSystemMatrixToRhinoMatrix(System.Numerics.Matrix4x4 m)
+        public void GetTrackerCorrectedMatrix4X4()
+        {
+            Matrix4x4 oldMatrix = ConvertFromRhinoMatrixToSystemMatrix(new Matrix(CorrectedMatrix4X4));
+            Matrix4x4 transformMatrix4X4 = new Matrix4x4(-1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1);
+            
+            Matrix4x4 newMatrix4X4 = Matrix4x4.Multiply(oldMatrix,transformMatrix4X4);
+            CorrectedMatrix4X4 = ConvertFromSystemMatrixToRhinoMatrix(newMatrix4X4);
+        }
+
+        public static Matrix4x4 ConvertFromRhinoMatrixToSystemMatrix(Matrix rMatrix)
+        {
+            Matrix4x4 sm = new Matrix4x4(
+                (float)rMatrix[0, 0], (float)rMatrix[0, 1], (float)rMatrix[0, 2], (float)rMatrix[0, 3],
+                (float)rMatrix[1, 0], (float)rMatrix[1, 1], (float)rMatrix[1, 2], (float)rMatrix[1, 3],
+                (float)rMatrix[2, 0], (float)rMatrix[2, 1], (float)rMatrix[2, 2], (float)rMatrix[2, 3],
+                (float)rMatrix[3, 0], (float)rMatrix[3, 1], (float)rMatrix[3, 2], (float)rMatrix[3, 3]);
+            return sm;
+        }
+
+        public Transform ConvertFromSystemMatrixToRhinoMatrix(Matrix4x4 m)
         {
             Transform t = new Transform
             {
