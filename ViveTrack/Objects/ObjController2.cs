@@ -45,6 +45,15 @@ namespace ViveTrack.Objects
             pManager.AddGeometryParameter("Controller", "Controller", "HTC Vive Controller 3D model", GH_ParamAccess.item);
             pManager.AddPlaneParameter("Plane", "Plane", "The Lighthouse plane representation", GH_ParamAccess.item);
             pManager.AddGenericParameter("Matrix", "Matrix", "Transformation matrix of Lighthouse", GH_ParamAccess.item);
+            pManager.AddGenericParameter("TriggerState", "TriggerState", "Return the states of trigger. A list of\n" +
+                                                                         "1. TriggerPressed(True or False)\n" +
+                                                                         "2. TriggerClicked(True or False)\n" +
+                                                                         "3. TriggerValue(value frome 0 to 1, 1 means fully pressed)", GH_ParamAccess.list);
+            pManager.AddGenericParameter("TouchPadState", "TouchPadState", "Return the states of TouchPad. A list of\n" +
+                                                                           "1. TouchPadTouched(True or False)\n" +
+                                                                           "2. TouchPadClicked(True or False)\n" +
+                                                                           "3. TouchPadnValueX(value from -1 to 1, the touchpad from left to right)\n" +
+                                                                           "4. TouchPadnValueY(value from -1 to 1, the touchpad from bottom to top)", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -84,6 +93,10 @@ namespace ViveTrack.Objects
             DA.SetData("Controller", newcontroller);
             DA.SetData("Plane", OldPlane);
             DA.SetData("Matrix", OldTransform);
+
+            CurrenTrackedDevice.GetControllerTriggerState();
+            DA.SetDataList("TriggerState", CurrenTrackedDevice.TriggerStates);
+            DA.SetDataList("TouchPadState", CurrenTrackedDevice.TouchPadStates);
         }
 
         /// <summary>

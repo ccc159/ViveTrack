@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using Valve.VR;
 using Rhino.Geometry;
 using System.Numerics;
+using Grasshopper.Documentation;
 using Rhino;
+using Rhino.Collections;
 using Quaternion = System.Numerics.Quaternion;
 
 namespace ViveTrack
@@ -26,13 +28,16 @@ namespace ViveTrack
         public Quaternion Quaternion;
         public Vector3d CorrectedTranslation;
         public Quaternion CorrectedQuaternion;
+
+        internal List<object> TriggerStates;
+        internal bool TriggerClicked;
         internal bool TriggerPressed;
-
-        public string controllerstates;
-
-        
-
-
+        internal double TriggerValue;
+        internal List<object> TouchPadStates;
+        internal bool TouchPadTouched;
+        internal bool TouchPadClicked;
+        internal double TouchPadValueX;
+        internal double TouchPadValueY;
 
 
 
@@ -207,18 +212,25 @@ namespace ViveTrack
         public void GetControllerTriggerState()
         {
             VRControllerState_t controllerState = new VRControllerState_t();
-            
-            if (this.vr.GetControllerState((uint)this.index, ref controllerState))
-            {
-                TriggerPressed = (controllerState.ulButtonPressed & (1UL << ((int)Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger))) > 0L;
-            }
-            controllerstates = "";
-            controllerstates += controllerState.rAxis0.x + "\n" + controllerState.rAxis1.x + "\n" +
-                                controllerState.rAxis2.x + "\n" + controllerState.rAxis3.x + "\n" +
-                                controllerState.rAxis4.x + "\n" + controllerState.rAxis0.y + "\n" + controllerState.rAxis1.y + "\n" +
-                controllerState.rAxis2.y + "\n" + controllerState.rAxis3.y + "\n" +
-                controllerState.rAxis4.y + "\n" + controllerState.ulButtonPressed + "\n" +
-                                controllerState.ulButtonTouched + "\n" + controllerState.unPacketNum + "\n";
+
+            this.vr.GetControllerState(this.index, ref controllerState);
+            TriggerPressed = controllerState.ulButtonTouched == 8589934592;
+            TriggerValue = controllerState.rAxis1.x;
+            TriggerClicked= controllerState.ulButtonPressed == 8589934592 && Math.Abs(TriggerValue - 1) < 0.001;
+
+            TouchPadTouched = controllerState.ulButtonTouched == 4294967296;
+            TouchPadClicked = controllerState.ulButtonPressed == 4294967296;
+            TouchPadValueX = controllerState.rAxis0.x;
+            TouchPadValueY = controllerState.rAxis0.y;
+
+            AddStatesToLists();
+
+        }
+
+        internal void AddStatesToLists()
+        {
+            TriggerStates = new List<object>(){TriggerPressed, TriggerClicked, TriggerValue};
+            TouchPadStates = new List<object>(){ TouchPadTouched, TouchPadClicked, TouchPadValueX, TouchPadValueY };
         }
 
     }
