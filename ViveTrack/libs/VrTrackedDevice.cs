@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Valve.VR;
 using Rhino.Geometry;
 using System.Numerics;
+using Rhino;
 using Quaternion = System.Numerics.Quaternion;
 
 namespace ViveTrack
@@ -25,6 +26,11 @@ namespace ViveTrack
         public Quaternion Quaternion;
         public Vector3d CorrectedTranslation;
         public Quaternion CorrectedQuaternion;
+        internal bool TriggerPressed;
+
+        public string controllerstates;
+
+        
 
 
 
@@ -36,6 +42,7 @@ namespace ViveTrack
             this.TrackedDevices = trackedDevices;
             this.index = Convert.ToUInt32(iindex);
             this.device_class = GetClass();
+            this.TriggerPressed = false;
 
         }
 
@@ -83,7 +90,7 @@ namespace ViveTrack
                 this.TrackedDevices.IndexesByClasses["HMD"].Add(Convert.ToInt16(index));
                 return "HMD";
             }
-            if (type == ETrackedDeviceClass.GenericTracker)
+            if (type == ETrackedDeviceClass.Other)
             {
                 this.TrackedDevices.Trackers += 1;
                 this.TrackedDevices.IndexesByClasses["Tracker"].Add(Convert.ToInt16(index));
@@ -197,7 +204,29 @@ namespace ViveTrack
 
         }
 
+        public void GetControllerTriggerState()
+        {
+            VRControllerState_t controllerState = new VRControllerState_t();
+            
+            if (this.vr.GetControllerState((uint)this.index, ref controllerState))
+            {
+                TriggerPressed = (controllerState.ulButtonPressed & (1UL << ((int)Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger))) > 0L;
+            }
+            controllerstates = "";
+            controllerstates += controllerState.rAxis0.x + "\n" + controllerState.rAxis1.x + "\n" +
+                                controllerState.rAxis2.x + "\n" + controllerState.rAxis3.x + "\n" +
+                                controllerState.rAxis4.x + "\n" + controllerState.rAxis0.y + "\n" + controllerState.rAxis1.y + "\n" +
+                controllerState.rAxis2.y + "\n" + controllerState.rAxis3.y + "\n" +
+                controllerState.rAxis4.y + "\n" + controllerState.ulButtonPressed + "\n" +
+                                controllerState.ulButtonTouched + "\n" + controllerState.unPacketNum + "\n";
+        }
+
     }
+    //rAxis1 x trigger from 0.019 to 1
+    //rAxis0 x -1 to 1 horizontal left to right y -1 to 1 verical bottom to up
+    //button 4294967296
+    //trigger 8589934592
 
 
 }
+

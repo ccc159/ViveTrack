@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
+using Valve.VR;
 using ViveTrack.Properties;
 
 namespace ViveTrack
@@ -65,7 +66,7 @@ namespace ViveTrack
             else
             {
                 OutMsg = "Vive is not setup correctly!! Detailed Reason:\n" + Vive.errorMsg + "\nCheck online the error code for more information.";
-                Vive.Conect();
+                Vive.Connect();
             }
             DA.SetData("Msg", OutMsg);
 
@@ -110,14 +111,14 @@ namespace ViveTrack
         protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
         {
             base.AppendAdditionalComponentMenuItems(menu);
-            Menu_AppendItem(menu, "ForceRecompute", Menu_Click_Pause, true, false).ToolTipText = @"Click to reset the component.";
+            Menu_AppendItem(menu, "ForceRecompute", Menu_Click_Recompute, true, false).ToolTipText = @"Click to reset the component.";
 
 
         }
 
-        private void Menu_Click_Pause(object sender, EventArgs e)
+        private void Menu_Click_Recompute(object sender, EventArgs e)
         {
-            this.Vive.Conect();
+            this.Vive.Connect();
             UserPermit = true;
             this.ExpireSolution(true);
         }

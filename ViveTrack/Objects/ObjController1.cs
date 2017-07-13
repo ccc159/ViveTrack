@@ -45,6 +45,7 @@ namespace ViveTrack.Objects
             pManager.AddGeometryParameter("Controller", "Controller", "HTC Vive Controller 3D model", GH_ParamAccess.item);
             pManager.AddPlaneParameter("Plane", "Plane", "The Lighthouse plane representation", GH_ParamAccess.item);
             pManager.AddGenericParameter("Matrix", "Matrix", "Transformation matrix of Lighthouse", GH_ParamAccess.item);
+            pManager.AddTextParameter("Trigger", "Trigger", "Return true if the trigger is pressed, otherwise false",GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -79,6 +80,9 @@ namespace ViveTrack.Objects
             DA.SetData("Controller", newcontroller);
             DA.SetData("Plane", OldPlane);
             DA.SetData("Matrix", OldTransform);
+
+            CurrenTrackedDevice.GetControllerTriggerState();
+            DA.SetData("Trigger", CurrenTrackedDevice.controllerstates);
         }
 
         /// <summary>

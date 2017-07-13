@@ -9,7 +9,7 @@ namespace ViveTrack
 {
     public class OpenvrWrapper
     {
-        private CVRSystem vr = null;
+        internal CVRSystem vr = null;
         public TrackedDevicePose_t[] Poses = new TrackedDevicePose_t[OpenVR.k_unMaxTrackedDeviceCount];
         public VrTrackedDevices TrackedDevices;
         public string errorMsg;
@@ -17,7 +17,7 @@ namespace ViveTrack
 
         public OpenvrWrapper()
         {
-            Conect();
+            Connect();
         }
 
         ~OpenvrWrapper()
@@ -25,7 +25,7 @@ namespace ViveTrack
             OpenVR.Shutdown();
         }
 
-        public void Conect()
+        public void Connect()
         {
             //Initialize OpenVR  
             EVRInitError eError = EVRInitError.None;
