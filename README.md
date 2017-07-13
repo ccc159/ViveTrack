@@ -32,7 +32,7 @@ There are a few things you need to install and setup before using ViveTrack:
  Installation of ViveTrack is a normal process like installing other Grasshopper plugins. Simply download [**ViveTrack**](https://github.com/ccc159/ViveTrack/releases), unzip them, copy ```ViveTrack.gha``` and ```openvr_api.dll``` into your ```Grasshopper/Libraries``` Folder. Remember to unblock them. <br>
  Start `Rhino`, before running `Grasshopper`, type `GrasshopperDeveloperSettings` in Rhino console, and **uncheck** `Memory load *.GHA assemblies using COFF byte arrays`, then start `Grasshopper`.
  
- ### Using Guide
+ ### Using Guide(Deprecated)
  The plugin is quite self-explainary. Just download and try it out. The image below can give you some hints.<br>
  You need SteamVR runtime to run this plugin. You can either choose to run ```SteamVR``` from ```Steam``` first(Recommended) or you can let the plugin handle this:)
  <img src="https://raw.githubusercontent.com/ccc159/ViveTrack/master/ViveTrack/utils/explanation.png"  width="720"><br>
