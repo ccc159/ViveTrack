@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CalibrateOrigin.cs" />
     <Compile Include="libs\VrTrackedDevice.cs" />
     <Compile Include="libs\VrTrackedDevices.cs" />
     <None Include="libs\LighthouseTracking.cs" />
@@ -78,6 +79,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="StartVive.cs" />
+    <Compile Include="Utils.cs" />
     <Compile Include="ViveTrackInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="resources\controller.bytes" />

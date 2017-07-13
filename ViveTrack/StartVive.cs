@@ -56,8 +56,11 @@ namespace ViveTrack
                 AskforRunningSteamVR();
                 return;
             }
+            Vive.Connect();
+            Vive.Update();
             if (Vive.Success)
             {
+                
                 OutMsg = Vive.TrackedDevices.Summary();
                 //DA.SetDataList("Index", Vive.TrackedDevices.Indexes);
                 DA.SetData("Vive", Vive);
@@ -86,7 +89,15 @@ namespace ViveTrack
             DialogResult dialogResult = MessageBox.Show($@"{OutMsg}", @"SteamVR not running", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Steam\steamapps\common\SteamVR\bin\win64\vrstartup.exe");
+                try
+                {
+                    System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Steam\steamapps\common\SteamVR\bin\win64\vrstartup.exe");
+                }
+                catch
+                {
+                    AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Couldn't find SteamVR, please run SteamVR by yourself.");
+                    throw;
+                }
                 await Task.Delay(7000);
             }
             else if (dialogResult == DialogResult.No)
@@ -118,6 +129,7 @@ namespace ViveTrack
 
         private void Menu_Click_Recompute(object sender, EventArgs e)
         {
+
             this.Vive.Connect();
             UserPermit = true;
             this.ExpireSolution(true);

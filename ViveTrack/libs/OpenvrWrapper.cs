@@ -18,6 +18,7 @@ namespace ViveTrack
         public OpenvrWrapper()
         {
             Connect();
+            Update();
         }
 
         ~OpenvrWrapper()
@@ -27,6 +28,7 @@ namespace ViveTrack
 
         public void Connect()
         {
+            if (vr != null) return;
             //Initialize OpenVR  
             EVRInitError eError = EVRInitError.None;
             vr = OpenVR.Init(ref eError, EVRApplicationType.VRApplication_Background);
@@ -34,11 +36,16 @@ namespace ViveTrack
             {
                 ReportError(eError);
                 OpenVR.Shutdown();
+                vr = null;
                 Success = false;
                 return;
             }
-
             Success = true;
+        }
+
+        public void Update()
+        {
+            if (!Success) return;
             TrackedDevices = new VrTrackedDevices(this.vr);
             //Initializing object to hold indexes for various tracked objects 
             vr.GetDeviceToAbsoluteTrackingPose(ETrackingUniverseOrigin.TrackingUniverseStanding, 0, Poses);
