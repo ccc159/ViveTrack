@@ -26,7 +26,7 @@ namespace ViveTrack
             get
             {
                 //Return a short string describing the purpose of this GHA library.
-                return "";
+                return "ViveTrack is used to get VIVE tracking device pose in grasshopper";
             }
         }
         public override Guid Id
@@ -42,7 +42,7 @@ namespace ViveTrack
             get
             {
                 //Return a string identifying you or your company.
-                return "";
+                return "Jingcheng Chen";
             }
         }
         public override string AuthorContact
@@ -50,7 +50,7 @@ namespace ViveTrack
             get
             {
                 //Return a string representing your preferred contact details.
-                return "";
+                return "mail@chenjingcheng.com";
             }
         }
     }

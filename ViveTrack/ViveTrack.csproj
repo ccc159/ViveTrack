@@ -88,9 +88,6 @@
     <None Include="resources\tracker.bytes" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="openvr_api.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="resources\ViveStart.png" />
     <None Include="resources\ObjTracker.png" />
     <None Include="resources\ObjLighthouse.png" />
@@ -103,6 +100,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Properties\openvr_api.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

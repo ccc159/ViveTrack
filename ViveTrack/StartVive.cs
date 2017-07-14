@@ -55,6 +55,7 @@ namespace ViveTrack
             if (!DetectSteamVR())
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "SteamVR not running.Please run SteamVR first.");
+                this.ExpireSolution(true);
                 return;
             }
             Vive.Connect();
@@ -125,14 +126,17 @@ namespace ViveTrack
         {
             base.AppendAdditionalComponentMenuItems(menu);
             Menu_AppendItem(menu, "RunSteamVR", Menu_RunSteamVR, true, false).ToolTipText = @"Click to reset the component.";
-
+           
 
         }
+
+
 
         private void Menu_RunSteamVR(object sender, EventArgs e)
         {
             RunningSteamVR();
             this.ExpireSolution(true);
+            
         }
 
         /// <summary>
