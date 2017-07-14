@@ -61,21 +61,21 @@ namespace ViveTrack.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Calibration {
+            get {
+                object obj = ResourceManager.GetObject("Calibration", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to pHlltBw30KWwWzSeHjM7ZmZmZqZnihmfmZmZmZmZKY6ZYowTY8wQM3PIEO99+c6es7t/99UZ1VW3WqpSSQU2oYSQb/iL4TF/jqGpXatddOcupbt06tSlc5bvolp37xHdpXPRvNlyZsudA3/ZcubP8l3pXh179ureumjn1r16dm/eMct3NXq16BjdsnLrfnW6dGiN0Xlz5SqQs3XB/C3z582bN3cOGbNCnP8mzla+dZdOrXt275etause7QSe+73/Zw3TvHvLdtG9W+du1Ul36dq6c+de3Vv0EK2a92weM0gpxWLEC9ITEvNV0xPSaQ4Qjmn+3KkI+zSEkdcAn78xEhcPH16+Wq38s0uRQ49IMIKmepv1xyTff8G7+i8FyZszAyEzk5H/5+9t8f+/PiE5h3Y9cGBKnIPHS6w/AFy0X+n5RfP1SPQjIUOL/x+/Q//H7/969r9tQWKUTSOWk4Ykrcgk2pN6JLPIIAaS+iSjSCcmkwYkvcgrWzNH8snBRJP3 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string controller {
             get {
                 return ResourceManager.GetString("controller", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap DeviceTracking {
-            get {
-                object obj = ResourceManager.GetObject("DeviceTracking", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -100,9 +100,19 @@ namespace ViveTrack.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ObjController {
+        internal static System.Drawing.Bitmap ObjController1 {
             get {
-                object obj = ResourceManager.GetObject("ObjController", resourceCulture);
+                object obj = ResourceManager.GetObject("ObjController1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ObjController2 {
+            get {
+                object obj = ResourceManager.GetObject("ObjController2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -120,9 +130,19 @@ namespace ViveTrack.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ObjLighthouse {
+        internal static System.Drawing.Bitmap ObjLighthouse1 {
             get {
-                object obj = ResourceManager.GetObject("ObjLighthouse", resourceCulture);
+                object obj = ResourceManager.GetObject("ObjLighthouse1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ObjLighthouse2 {
+            get {
+                object obj = ResourceManager.GetObject("ObjLighthouse2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -138,7 +158,7 @@ namespace ViveTrack.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to fJ0D0CRb026ru9hV3WPbtnHGtu15x7Y9c8a2bdu2bdu2567cc/6IP27cuGfF7nyezNxZu6ur5sP5oPk0TfvDXxLlr6Cfj0oVmzVv07ZQ29at27ZJk6Bq4w4dm7dtkydruozpMmfgr3QZs6dJUKhzq06dOzTO06Zx504dGrRKk6B854atmoeVaty9ctuWjenOmilTjoyNc2YPy541a9bMGUy5QmQ1OF2xxm1bN+7UoXu6Mo07NjPI213+XsNt0CGsWfMujTM3ah1o265xmzadOzTsaDRq0KmBNDmO45fjRUiuabKr3mEzGNAR4eWj4D1X83/v69dyIX788WtRSD68eKVssWcXIu55pEUY6Ev0Nu222LV/Umt1x9WyumU0LWNpTbtbutjVN48e5Ys4zqxcs+bTfF1L2HFzZX+c71ff+Rca7nmcL0bawpV/JPyW73zCzH17XYuUP8OjGyvmx3DzVyhU4c7gWwnz//v+xJFTu6bmuzln5e8Yubrm+zWzwK5z [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to fJ0DtCRZ066zKlmZVW3btqd72rbtPn3atj1t27Zt27ambdt9n9g9/1r/uuuuO8/aFe8bETtyV1Zmf5gPmk/TtN/8JVH+Cvr5qFypWfM2bQu3bd26bZt0iaqFd+jYvG2bvNkzZM6QNRN/ZcicM12iwp1bdercITxvm/DOnTo0bJUuUYXOjVo1Dysd3r1K25bhdGfPkiVX5vC/coblzJ49e9ZMplwhqhqcoXh429bhnTp0z1A2vGMzg7zd5c813IYdwpo17xKetXHrQNt24W3adO7QqKPRuGGnhtLkOI5fjhcppabJrsARMxjQERHlo/N9V/N/6+vXWiO+//Zr0Ug+uHilXPGnFyLveahFGuhL8ib9trh1flCbc9fVsrtlNS1zGU27U6b41dcPH+aPPM6sUqvWk/xdS9rxc+d8lP9n3/kXGu15lD9W+iJVvif+mv984qx9e12LUiDTwxsr5sdyC1QsXPHfwbcSF/jn3Ykjp3ZNzX9zzspfsXJ3zf9zZsFd [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string tracker {
             get {

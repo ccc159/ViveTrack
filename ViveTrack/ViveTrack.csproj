@@ -88,14 +88,6 @@
     <None Include="resources\tracker.bytes" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="resources\ViveStart.png" />
-    <None Include="resources\ObjTracker.png" />
-    <None Include="resources\ObjLighthouse.png" />
-    <None Include="resources\ObjHMD.png" />
-    <None Include="resources\ObjController.png" />
-    <None Include="resources\DeviceTracking.png" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -105,6 +97,14 @@
     <Content Include="Properties\openvr_api.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="resources\ObjLighthouse1.png" />
+    <None Include="resources\ObjController2.png" />
+    <None Include="resources\ObjController1.png" />
+    <None Include="resources\ObjLighthouse2.png" />
+    <None Include="resources\ViveStart.png" />
+    <None Include="resources\ObjTracker.png" />
+    <None Include="resources\ObjHMD.png" />
+    <None Include="resources\Calibration.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
