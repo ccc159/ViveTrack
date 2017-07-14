@@ -74,6 +74,9 @@ namespace ViveTrack
             }
             DA.SetData("Msg", OutMsg);
 
+            this.OnPingDocument().ScheduleSolution(1, doc => {
+                this.ExpireSolution(false);
+            });
         }
 
         public bool DetectSteamVR()
