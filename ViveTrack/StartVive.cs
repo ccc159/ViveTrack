@@ -4,17 +4,20 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Grasshopper.Kernel;
+using Grasshopper.Kernel.Types;
 using Rhino.Geometry;
 using Valve.VR;
 using ViveTrack.Properties;
+
 
 namespace ViveTrack
 {
     public class StartVive : GH_Component
     {
         public OpenvrWrapper Vive;
+        public static Transform CalibrationTransform = Transform.Identity;
+        public static GH_Plane CalibrationPlane;
         public string OutMsg;
-        public bool UserPermit = true;
         /// <summary>
         /// Initializes a new instance of the StartVive class.
         /// </summary>
@@ -49,11 +52,9 @@ namespace ViveTrack
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            if (!UserPermit) return;
             if (!DetectSteamVR())
             {
-                DA.SetData("Msg", "SteamVR not running.");
-                AskforRunningSteamVR();
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "SteamVR not running.Please run SteamVR first.");
                 return;
             }
             Vive.Connect();
@@ -79,31 +80,29 @@ namespace ViveTrack
         {
             Process[] vrServer = Process.GetProcessesByName("vrserver");
             Process[] vrMonitor = Process.GetProcessesByName("vrmonitor");
-            if ((vrServer.Length != 0) && (vrMonitor.Length != 0)) return true;
-            OutMsg = "SteamVR not running correctly.(Not detecting 'vrserver' and 'vrmonitor')\nDo you want to start SteamVR now?";
-            return false;
+            if ((vrServer.Length == 0) || (vrMonitor.Length == 0)) return false;
+            if (!OpenVR.IsRuntimeInstalled()) return false;
+            
+            return true;
         }
 
-        public async void AskforRunningSteamVR()
+        public void RunningSteamVR()
         {
-            DialogResult dialogResult = MessageBox.Show($@"{OutMsg}", @"SteamVR not running", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
+            Process myProcess = new Process();
+            try
             {
-                try
-                {
-                    System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Steam\steamapps\common\SteamVR\bin\win64\vrstartup.exe");
-                }
-                catch
-                {
-                    AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Couldn't find SteamVR, please run SteamVR by yourself.");
-                    throw;
-                }
-                await Task.Delay(7000);
+                myProcess.StartInfo.FileName = @"C:\Program Files (x86)\Steam\steamapps\common\SteamVR\bin\win64\vrstartup.exe";
+                myProcess.Start();
+                return;
             }
-            else if (dialogResult == DialogResult.No)
+            catch(Exception e)
             {
-                UserPermit = false;
+                string message = "Can not find SteamVR application, please run by yourself :/";
+                string caption = "Oops...Oops...Oops...";
+                MessageBoxButtons button = MessageBoxButtons.OK;
+                MessageBox.Show(message, caption, button, MessageBoxIcon.Warning);
             }
+
         }
 
         /// <summary>
@@ -122,16 +121,14 @@ namespace ViveTrack
         protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
         {
             base.AppendAdditionalComponentMenuItems(menu);
-            Menu_AppendItem(menu, "ForceRecompute", Menu_Click_Recompute, true, false).ToolTipText = @"Click to reset the component.";
+            Menu_AppendItem(menu, "RunSteamVR", Menu_RunSteamVR, true, false).ToolTipText = @"Click to reset the component.";
 
 
         }
 
-        private void Menu_Click_Recompute(object sender, EventArgs e)
+        private void Menu_RunSteamVR(object sender, EventArgs e)
         {
-
-            this.Vive.Connect();
-            UserPermit = true;
+            RunningSteamVR();
             this.ExpireSolution(true);
         }
 

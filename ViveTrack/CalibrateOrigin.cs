@@ -13,17 +13,18 @@ namespace ViveTrack
         /// Initializes a new instance of the CalibrateCenter class.
         /// </summary>
 
-        public static Transform CalibrationTransform;
+        
 
         private bool reset;
         private bool calibrate;
 
         public CalibrateOrigin()
           : base("CalibrateOrigin", "CalibrateOrigin",
-              "Reorient all the traced devices according to the new plane you set as origin plane",
+              "Reorient all the traced devices according to the new plane you set as origin plane\n\n" +
+              "WARNING: \n\n" +
+              "If you want to recalibrate according to another plane, please first reset then click calibrate.",
               "ViveTrack", "ViveTrack")
         {
-            CalibrationTransform = Transform.Identity;
             reset = false;
             calibrate = false;
         }
@@ -44,7 +45,7 @@ namespace ViveTrack
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddMatrixParameter("Matrix", "Matrix", "The transformation matrix between old plane and new plane.", GH_ParamAccess.item);
+            //pManager.AddMatrixParameter("Matrix", "Matrix", "The transformation matrix between old plane and new plane.", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -53,12 +54,10 @@ namespace ViveTrack
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            Plane iPlane = Plane.Unset;
+
             GH_Plane tempPlane = new GH_Plane();
             if(!DA.GetData("OriginPlane", ref tempPlane))return;
-            iPlane = tempPlane.Value;
-
-
+            
             DA.GetData("Calibrate", ref calibrate);
             DA.GetData("Reset", ref reset);
 
@@ -66,16 +65,19 @@ namespace ViveTrack
 
             if (calibrate)
             {
+                if (StartVive.CalibrationPlane == null) StartVive.CalibrationPlane = tempPlane;
+                Plane iPlane = StartVive.CalibrationPlane.Value;
                 Plane xyPlane = Plane.WorldXY;
-                CalibrationTransform = Transform.ChangeBasis(xyPlane, iPlane);
+                StartVive.CalibrationTransform = Transform.ChangeBasis(xyPlane, iPlane);
             };
 
             if (reset)
             {
-                CalibrationTransform = Transform.Identity;
+                StartVive.CalibrationTransform = Transform.Identity;
+                StartVive.CalibrationPlane = null;
             }
 
-            DA.SetData("Matrix", CalibrationTransform);
+            //DA.SetData("Matrix", CalibrationTransform);
 
         }
 
