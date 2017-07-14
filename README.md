@@ -12,7 +12,7 @@ Currently ViveTrack is only used for tracking 6DoF positions of Vive devices, wh
 * High Range: 5m x 5m(Official), 8m x 8m(tested online)
 * High Freedom of Tracking: Can be tracked in some extrem positions which normal tracking system are difficult to track
 ### Disadvantages
-* Hardware : You need at least 1 lighthouse and 1 tracker.
+* Hardware : You need at least 1 [lighthouse 150Euro](https://www.vive.com/de/accessory/base-station/) and [1 tracker 120 Euro](https://www.vive.com/de/vive-tracker-for-developer/).
 * Setup: You need to setup your tracking devices before using, although it's amazingly simple.
 
 ### Prerequisites
@@ -25,8 +25,9 @@ There are a few things you need to install and setup before using ViveTrack:
  **1.** update your SteamVR to **Beta** Version.<br>
  <img src="https://raw.githubusercontent.com/ccc159/ViveTrack/master/ViveTrack/utils/SteamVR_Beta.jpg"  width="500"><br>
  **2.** Open the configuration file ```default.vrsettings``` with a text editor following <code>C:\Program Files (x86)\Steam\steamapps\common\SteamVR\resources\settings\default.vrsettings</code><br>
- **3.** Change ```requireHmd``` key from ```true``` to ```false``` <br>
- **4.** If SteamVR is running, close and restart it. <br>
+ **3.** Change ```requireHmd``` key from ```true``` to ```false```  (so taht you can run without HMD) <br>
+ **4.** Change ```neverKillProcesses``` key from ```false``` to ```true```  (important! otherwise your rhino will crash once SteamVR stops running) <br>
+ **5.** If SteamVR is running, close and restart it. <br>
  
  ### Install ViveTrack
  Installation of ViveTrack is a normal process like installing other Grasshopper plugins. Simply download [**ViveTrack**](https://github.com/ccc159/ViveTrack/releases), unzip them, copy ```ViveTrack.gha``` and ```openvr_api.dll``` into your ```Grasshopper/Libraries``` Folder. Remember to unblock them. <br>
@@ -34,7 +35,7 @@ There are a few things you need to install and setup before using ViveTrack:
  
  ### Using Guide(Deprecated)
  The plugin is quite self-explainary. Just download and try it out. The image below can give you some hints.<br>
- You need SteamVR runtime to run this plugin. You can either choose to run ```SteamVR``` from ```Steam``` first(Recommended) or you can let the plugin handle this:)
+ You need SteamVR runtime running before running this plugin. 
  <img src="https://raw.githubusercontent.com/ccc159/ViveTrack/master/ViveTrack/utils/explanation.png"  width="720"><br>
  
  
