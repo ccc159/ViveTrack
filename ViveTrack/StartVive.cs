@@ -18,6 +18,7 @@ namespace ViveTrack
         public static Transform CalibrationTransform = Transform.Identity;
         public static GH_Plane CalibrationPlane;
         public string OutMsg;
+        public bool AutoUpdate;
         /// <summary>
         /// Initializes a new instance of the StartVive class.
         /// </summary>
@@ -27,6 +28,7 @@ namespace ViveTrack
               "ViveTrack", "ViveTrack")
         {
             Vive = new OpenvrWrapper();
+            AutoUpdate = true;
         }
 
         /// <summary>
@@ -34,6 +36,7 @@ namespace ViveTrack
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
+            pManager.AddBooleanParameter("AutoUpdate", "AutoUpdate", "Set True for auto update, if False is set you need a timer to refresh it.", GH_ParamAccess.item,true);
         }
 
         /// <summary>
@@ -43,7 +46,7 @@ namespace ViveTrack
         {
             pManager.AddTextParameter("Msg", "Msg", "Running Information of your Vive", GH_ParamAccess.item);
             pManager.AddGenericParameter("Vive", "Vive", "The Core of Vive tracking, needs to be passed to following component", GH_ParamAccess.item);
-            //pManager.AddIntegerParameter("Index", "Index", "The Index of running devices, from 0-16.",GH_ParamAccess.list);
+            
         }
 
         /// <summary>
@@ -52,6 +55,7 @@ namespace ViveTrack
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
+            DA.GetData("AutoUpdate", ref AutoUpdate);
             if (!DetectSteamVR())
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "SteamVR not running.Please run SteamVR first.");
@@ -75,9 +79,12 @@ namespace ViveTrack
             }
             DA.SetData("Msg", OutMsg);
 
-            this.OnPingDocument().ScheduleSolution(1, doc => {
-                this.ExpireSolution(false);
-            });
+            if (AutoUpdate)
+            {
+                this.OnPingDocument().ScheduleSolution(1, doc => {
+                    this.ExpireSolution(false);
+                });
+            }
         }
 
         public bool DetectSteamVR()
