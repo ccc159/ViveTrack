@@ -95,7 +95,7 @@ namespace ViveTrack
                 this.TrackedDevices.IndexesByClasses["HMD"].Add(Convert.ToInt16(index));
                 return "HMD";
             }
-            if (type == ETrackedDeviceClass.Other)
+            if (type == ETrackedDeviceClass.Tracker)
             {
                 this.TrackedDevices.Trackers += 1;
                 this.TrackedDevices.IndexesByClasses["Tracker"].Add(Convert.ToInt16(index));

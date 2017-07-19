@@ -2924,6 +2924,7 @@ namespace Valve.VR
         Invalid = 0,
         HMD = 1,
         Controller = 2,
+        Tracker = 3,
         TrackingReference = 4,
         Other = 1000,
     }
