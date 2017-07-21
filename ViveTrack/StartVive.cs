@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Grasshopper.Kernel;
@@ -59,7 +60,7 @@ namespace ViveTrack
             if (!DetectSteamVR())
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "SteamVR not running.Please run SteamVR first.");
-                this.ExpireSolution(true);
+                if(AutoUpdate) this.ExpireSolution(true);
                 return;
             }
             Vive.Connect();
@@ -154,4 +155,46 @@ namespace ViveTrack
             get { return new Guid("{730315e3-b05e-4227-aed2-cba81450bce7}"); }
         }
     }
+
+
+   public class Robot
+    {
+        public Plane CurrentPos { set; get; }
+        public List<Curve> PathCurves { set; get; }
+        public double Tolerance { set; get; }
+        public List<Point3d> PathPoints { set; get; }
+        public Point3d TargetPos { set; get; }
+        public bool Running { set; get; }
+
+        private double divideLength = 0.2;
+        private int index = 0;
+        private int pointsCount;
+  
+        
+
+        public Robot(Plane currentPos, List<Curve> paths, double tolerance)
+        {
+            CurrentPos = currentPos;
+            PathCurves = paths;
+            Tolerance = tolerance;
+            PathPoints = GetPathPoints();
+            pointsCount = PathPoints.Count;
+        }
+
+        private List<Point3d> GetPathPoints()
+        {
+            List<Point3d> pathPoints = new List<Point3d>();
+            foreach (var crv in PathCurves)
+            {
+                Point3d[] points;
+                crv.DivideByLength(divideLength, true, out points);
+                pathPoints.AddRange(points.ToList());
+            }
+            
+            return pathPoints;
+        }
+
+    }
+
+    
 }
