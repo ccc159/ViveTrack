@@ -1,3 +1,5 @@
+**NOTE: As I no longer possess any vive devices, and this plugin hasn't been updated for more than three years, I'll just archive this project and mark it read-only. Hopefully it still works as long as Vive doesn't change its APIs. But if not, feel free to continue from here and develop your own library:)**
+
 # ViveTrack
 ViveTrack is a **grasshopper plugin** that allows you to track your **HTC Vive** devices [6DoF](https://en.wikipedia.org/wiki/Six_degrees_of_freedom?oldformat=true), for instance your HMD, controllers, trackers and even customized trackers. It is vastly simplified for specially architecture students and you can basiclly plug&use without complicated setup.
 
